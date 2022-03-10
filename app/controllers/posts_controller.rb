@@ -24,7 +24,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.update(post_params)
+    if @post.update(params[:title, :body])
       redirect_to @post
     else
       render 'edit'
