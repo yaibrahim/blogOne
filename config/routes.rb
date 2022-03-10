@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :employees
+  resources :friends
+  get 'friends/index'
   get 'clients/index'
   resources :posts
   root 'posts#index'
