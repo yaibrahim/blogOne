@@ -1,10 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<p> Time: <%= @timeb %> </p>
+<p><%= csrf_meta_tags %></p>
+
+<div class="text-center">
+  <%= image_tag "e1.jpeg", alt: "Home",  class: "img-fluid"%>
+</div>
+
 <h1>Employees</h1>
 
-<table>
+<table class="table table-dark">
   <thead>
-    <tr>
+    <tr class="table-active">
       <th>First name</th>
       <th>Last name</th>
       <th>Email</th>
@@ -16,7 +23,7 @@
 
   <tbody>
     <% @employees.each do |employee| %>
-      <tr>
+      <tr class="table-active">
         <td><%= employee.first_name %></td>
         <td><%= employee.last_name %></td>
         <td><%= employee.email %></td>
@@ -24,7 +31,7 @@
         <td><%= employee.instagram %></td>
         <td><%= link_to 'Show', employee %></td>
         <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
-        <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', employee, method: :delete, remote: true %></td>
       </tr>
     <% end %>
   </tbody>
@@ -33,3 +40,26 @@
 <br>
 
 <%= link_to 'New Employee', new_employee_path %>
+
+<%= form_with method: :get do |form| %>
+  <%= form.label :query, "Search for:" %>
+  <%= form.text_field :query %>
+  <%= form.submit "Search" %>
+  <%= form.check_box :pet_dog %>
+  <%= form.label :pet_dog, "I own a dog" %>
+  <%= form.check_box :pet_cat %>
+  <%= form.label :pet_cat, "I own a cat" %>
+<% end %>
+<br>
+
+
+<script>
+window.addEventListener("load", () => {
+  const links = document.querySelectorAll("a[data-remote]");
+  links.forEach((element) => {
+    element.addEventListener("ajax:success", () => {
+      alert("The article was deleted.");
+    });
+  });
+});
+</script>

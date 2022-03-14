@@ -1,15 +1,18 @@
-<h1>Posts -> index</h1>
-<p>Find me in app/views/posts/index.html.erb</p>
-<button style="height:40px;"><%= link_to "Create New Post", new_post_path%></button>
+<div class="container">
+  <h3>For Creating New Post</h3>
+  <button_to class="btn btn-danger"><%= link_to "Create New Post", new_post_path%></button_to>
+</div>
 
-<h2>Published Posts</h2>
-<br>
+<div class="container">
+  <h2>Published Posts</h2>
+  <br>
+</div>
 
 <% @posts.each do |post| %>
-  <div>
+  <div class="container">
   <h2><%= post.title %></h2>
   <div><%= truncate(post.body, :length => 35) %></div>
-  <button style="height:40px;"><%= link_to "Read full Post", post%></button>
+  <button class="btn btn-dark"><%= link_to "Read full Post", post%></button>
   </div>
 
 <% end %>

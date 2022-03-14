@@ -1,0 +1,19 @@
+<%= form_with(model: @article, id: "new-article", local: false) do |form| %>
+  <%= form.text_field :title %><br>
+  <%= form.text_area :body, size: "60x10" %>
+  <%= form.submit %>
+<% end %>
+
+
+<script>
+window.addEventListener("load", () => {
+  const element = document.querySelector("#new-article");
+  element.addEventListener("ajax:success", (event) => {
+    const [_data, _status, xhr] = event.detail;
+    element.insertAdjacentHTML("beforeend", xhr.responseText);
+  });
+  element.addEventListener("ajax:error", () => {
+    element.insertAdjacentHTML("beforeend", "<p>ERROR</p>");
+  });
+});
+</script>

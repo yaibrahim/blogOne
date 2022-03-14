@@ -4,6 +4,7 @@ class EmployeesController < ApplicationController
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
+    @timeb = Time.now
   end
 
   # GET /employees/1 or /employees/1.json
@@ -23,26 +24,25 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
 
-    respond_to do |format|
       if @employee.save
-        format.html { redirect_to employee_url(@employee), notice: "Employee was successfully created." }
-        format.json { render :show, status: :created, location: @employee }
+        # head :bad_request
+        redirect_to employee_path(@employee), notice: "Employee was successfully created."
+        # render :show, status: :created, location: @employee
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
+        render json: @employee.errors, status: :unprocessable_entity
       end
-    end
   end
 
   # PATCH/PUT /employees/1 or /employees/1.json
   def update
     respond_to do |format|
       if @employee.update(employee_params)
-        format.html { redirect_to employee_url(@employee), notice: "Employee was successfully updated." }
-        format.json { render :show, status: :ok, location: @employee }
+        #format.html { redirect_to employee_url(@employee), notice: "Employee was successfully updated." }
+        format.html { render :show, status: :ok, location: @employee, notice: "Employee was successfully updated."  }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: 422 }
+        format.json { render json: @employee.errors, status: 422 }
       end
     end
   end

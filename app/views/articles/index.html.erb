@@ -1,0 +1,48 @@
+<h1>Articles#index</h1>
+<p>Find me in app/views/articles/index.html.erb</p>
+
+<p>Total Articles: <%= @articles.length %></p>
+
+<% @articles.each do |article| %>
+  <div class="container">
+  <h2><%= article.title %></h2>
+  <div><%= truncate(article.body, :length => 35) %></div><br>
+  <button class="btn btn-dark"><%= link_to "Read full Post", article%></button>
+  </div>
+<% end %>
+<br>
+<%= link_to "New Article", new_article_path%>
+<br>
+
+<script>
+function paintIt(element, backgroundColor, textColor) {
+  element.style.backgroundColor = backgroundColor;
+  if (textColor) {
+    element.style.color = textColor;
+  }
+}
+
+
+window.addEventListener("load", () => {
+  const links = document.querySelectorAll(
+    "a[data-background-color]"
+  );
+  links.forEach((element) => {
+    element.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const {backgroundColor, textColor} = element.dataset;
+      paintIt(element, backgroundColor, textColor);
+    });
+  });
+});
+</script>
+
+
+<a href="#" onclick="this.style.backgroundColor='#990000';event.preventDefault();">Paint it red</a>
+<a href="#" onclick="this.style.backgroundColor='#009900';this.style.color='#FFFFFF';event.preventDefault();">Paint it green</a>
+
+<br><br>
+<a href="#" data-background-color="#990000">Paint it red</a>
+<a href="#" data-background-color="#009900" data-text-color="#FFFFFF">Paint it green</a>
+<a href="#" data-background-color="#000099" data-text-color="#FFFFFF">Paint it blue</a>
