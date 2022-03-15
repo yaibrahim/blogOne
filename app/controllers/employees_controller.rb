@@ -4,6 +4,7 @@ class EmployeesController < ApplicationController
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
+    # @employees = Employee.find_by(first_name: 'Muhammad')
     @timeb = Time.now
   end
 
@@ -22,23 +23,26 @@ class EmployeesController < ApplicationController
 
   # POST /employees or /employees.json
   def create
-    @employee = Employee.new(employee_params)
+    respond_to do |format|
+      @employee = Employee.create(employee_params)
 
-      if @employee.save
+        if @employee.save
         # head :bad_request
-        redirect_to employee_path(@employee), notice: "Employee was successfully created."
+          redirect_to employee_path(@employee), notice: "Employee was successfully created."
         # render :show, status: :created, location: @employee
-      else
-        render :new, status: :unprocessable_entity
-        render json: @employee.errors, status: :unprocessable_entity
-      end
+        else
+          format.html {render :new, status: :unprocessable_entity }
+          format.json { render json: @employee.errors, status: :unprocessable_entity }
+        end
+    end
   end
 
   # PATCH/PUT /employees/1 or /employees/1.json
   def update
     respond_to do |format|
       if @employee.update(employee_params)
-        #format.html { redirect_to employee_url(@employee), notice: "Employee was successfully updated." }
+        # if @employee.update(first_name: 'Dave')
+        # format.html { redirect_to employee_url(@employee), notice: "Employee was successfully updated." }
         format.html { render :show, status: :ok, location: @employee, notice: "Employee was successfully updated."  }
       else
         format.html { render :edit, status: 422 }
@@ -54,7 +58,7 @@ class EmployeesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to employees_url, notice: "Employee was successfully destroyed." }
       format.json { head :no_content }
-      format.js   { render :layout => false }
+      #format.js   { render :layout => false }
     end
   end
 
