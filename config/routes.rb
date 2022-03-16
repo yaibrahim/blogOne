@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'clearners/index'
   resources :articles, only: [:show, :create, :index, :new ]
   resources :employees
   resources :friends

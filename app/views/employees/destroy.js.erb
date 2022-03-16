@@ -1,3 +1,5 @@
-$('.delete_employee').bind('ajax:success', function() {
-   $(this).closest('tr').fadeOut();
+$('.delete_e').on('ajax:success', function(result) {
+   $(this).closest('tr').fadeOut("slow");
+   alert("Employee Deleted Sucessfully!!");
+   //alert(result);
 });

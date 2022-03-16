@@ -6,6 +6,7 @@ class EmployeesController < ApplicationController
     @employees = Employee.all
     # @employees = Employee.find_by(first_name: 'Muhammad')
     @timeb = Time.now
+    # render json: { html: render_to_string(partial: 'random') }
   end
 
   # GET /employees/1 or /employees/1.json
@@ -27,11 +28,11 @@ class EmployeesController < ApplicationController
       @employee = Employee.create(employee_params)
 
         if @employee.save
-        # head :bad_request
-          redirect_to employee_path(@employee), notice: "Employee was successfully created."
+          format.html { redirect_to employee_path(@employee), notice: "Employee was successfully created." }
         # render :show, status: :created, location: @employee
         else
-          format.html {render :new, status: :unprocessable_entity }
+          format.js
+          format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @employee.errors, status: :unprocessable_entity }
         end
     end
@@ -41,9 +42,8 @@ class EmployeesController < ApplicationController
   def update
     respond_to do |format|
       if @employee.update(employee_params)
-        # if @employee.update(first_name: 'Dave')
-        # format.html { redirect_to employee_url(@employee), notice: "Employee was successfully updated." }
-        format.html { render :show, status: :ok, location: @employee, notice: "Employee was successfully updated."  }
+        format.html { redirect_to employee_path(@employee), notice: "Employee was successfully updated." }
+        # format.html { render :show, status: :ok, location: @employee, notice: "Employee was successfully updated."  }
       else
         format.html { render :edit, status: 422 }
         format.json { render json: @employee.errors, status: 422 }
@@ -53,12 +53,13 @@ class EmployeesController < ApplicationController
 
   # DELETE /employees/1 or /employees/1.json
   def destroy
+    puts request.format
     @employee.destroy
 
     respond_to do |format|
       format.html { redirect_to employees_url, notice: "Employee was successfully destroyed." }
       format.json { head :no_content }
-      #format.js   { render :layout => false }
+      format.js
     end
   end
 

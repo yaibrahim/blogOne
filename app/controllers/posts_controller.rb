@@ -18,6 +18,8 @@ class PostsController < ApplicationController
   end
 
   def show
+    # byebug
+    # render :json => {"response" => "OK"}
   end
 
   def edit
